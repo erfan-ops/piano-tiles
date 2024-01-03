@@ -1,0 +1,48 @@
+{
+    "width": "default",
+    "height": "default",
+    
+    "song_speed": 6.5,
+    "tile_height": 250,
+    "speed_increase_rate": 0.02,
+    "lines": 4,
+    "repeat": false,
+
+    "fixed_width": true,
+    "game_over_fade_in_time": 1,
+    "show_speed": true,
+    "speed_decimals": 2,
+    "show_score": false,
+    "show_fps": true,
+
+    "fps": "VSync",
+
+    "spawn_rates": {
+        "single_note_spawn_rate": 5,
+        "double_note_spawn_rate": 0,
+        "triple_note_spawn_rate": 0,
+        "quad_note_spawn_rate": 0,
+        "empty_tile_spawn_rate": 0
+    },
+
+    "colors": {
+        "bg_colors": [[0, 0, 255], [255, 0, 0]],
+        "tile_colors": [[255, 0, 255], [0, 255, 255]],
+        "line_color": "#ffffff",
+        "score_color": "#FFFFFF",
+        "game_over_start_color": [255, 0, 0],
+        "game_over_end_color": [255, 255, 255],
+        "text_color": [0, 0, 0]
+    },
+
+    "keys": {
+        "2": ["f", "j"],
+        "3": ["f", "space", "j"],
+        "4": ["d", "f", "j", "k"],
+        "5": ["d", "f", "space", "j", "k"],
+        "6": ["s", "d", "f", "j", "k", "l"],
+        "7": ["s", "d", "f", "space", "j", "k", "l"],
+        "8": ["a", "s", "d", "f", "j", "k", "l", ";"],
+        "9": ["a", "s", "d", "f", "space", "j", "k", "l", ";"]
+    }
+}
