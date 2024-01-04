@@ -1,6 +1,8 @@
 {
     "width": "default",
     "height": "default",
+
+    "font": "Kablammo-Regular-VariableFont_MORF.ttf",
     
     "song_speed": 6,
     "tile_height": 250,

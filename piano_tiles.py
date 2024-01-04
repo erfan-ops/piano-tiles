@@ -43,8 +43,8 @@ class App(SongInfo):
         
         self.line = (WIDTH//4) * choice(range(0, 4))
         
-        self.go_font = pygame.font.Font("fonts/Kablammo-Regular-VariableFont_MORF.ttf", int(80 * W_RATIO * H_RATIO))
-        self.reset_font = pygame.font.Font("fonts/Kablammo-Regular-VariableFont_MORF.ttf", int(40 * W_RATIO * H_RATIO))
+        self.go_font = pygame.font.Font(f"fonts/{self._SETTINGS['font']}", int(80 * W_RATIO * H_RATIO))
+        self.reset_font = pygame.font.Font(f"fonts/{self._SETTINGS['font']}", int(40 * W_RATIO * H_RATIO))
         
         if self._SETTINGS["fps"] == "VSync":
             self._REFRESH_RATE: int = EnumDisplaySettings(EnumDisplayDevices().DeviceName, -1).DisplayFrequency
