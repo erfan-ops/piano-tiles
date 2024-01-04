@@ -2,9 +2,9 @@
     "width": "default",
     "height": "default",
     
-    "song_speed": 6.5,
+    "song_speed": 6,
     "tile_height": 250,
-    "speed_increase_rate": 0.02,
+    "speed_increase_rate": 0.2,
     "lines": 4,
     "repeat": false,
 
@@ -15,7 +15,7 @@
     "show_score": false,
     "show_fps": true,
 
-    "fps": "VSync",
+    "fps": 360,
 
     "spawn_rates": {
         "single_note_spawn_rate": 5,
@@ -27,7 +27,7 @@
 
     "colors": {
         "bg_colors": [[0, 0, 255], [255, 0, 0]],
-        "tile_colors": [[255, 0, 255], [0, 255, 255]],
+        "tile_colors": [[0, 255, 255], [255, 0, 255]],
         "line_color": "#ffffff",
         "score_color": "#FFFFFF",
         "game_over_start_color": [255, 0, 0],

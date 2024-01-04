@@ -427,7 +427,7 @@ class App(SongInfo):
                 self.dt = 1 / self.clock.get_fps() 
             
             self.timer += self.dt
-            self.d_song_speed += self.dt * self.tsr * (self.song_speed / (self._SETTINGS["song_speed"]*self._SETTINGS["tile_height"]))
+            self.d_song_speed += self.dt * self._SETTINGS["speed_increase_rate"]
             self.tile_spawn_rate = 1/self.d_song_speed
             if self.timer >= self.tile_spawn_rate:
                 self.generate_new_tile()
@@ -436,6 +436,7 @@ class App(SongInfo):
                 self.timer = 0
             
             for t in self.tiles:
+                t.speed = self.d_song_speed*self._SETTINGS["tile_height"]
                 if t.rect.top >= HEIGHT:
                     self.pop_tile()
                     self.game_over()
