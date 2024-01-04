@@ -120,7 +120,7 @@ class App(SongInfo):
             
             self.line = x
             
-            t = Tile(x, self.d_song_speed*self._SETTINGS["tile_height"])
+            t = Tile(x, self.d_song_speed*self._SETTINGS["tile_height"]*H_RATIO)
             t.related_key = self.keys[l]
             
             self.tiles.append(t)
@@ -428,7 +428,7 @@ class App(SongInfo):
             
             self.timer += self.dt
             self.d_song_speed += self.dt * self._SETTINGS["speed_increase_rate"]
-            self.tile_spawn_rate = 1/self.d_song_speed
+            self.tile_spawn_rate = (1/self.d_song_speed)
             if self.timer >= self.tile_spawn_rate:
                 self.generate_new_tile()
                 if len(self.tiles):
@@ -436,7 +436,7 @@ class App(SongInfo):
                 self.timer = 0
             
             for t in self.tiles:
-                t.speed = self.d_song_speed*self._SETTINGS["tile_height"]
+                t.speed = self.d_song_speed*self._SETTINGS["tile_height"]*H_RATIO
                 if t.rect.top >= HEIGHT:
                     self.pop_tile()
                     self.game_over()
