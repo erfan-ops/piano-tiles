@@ -1,12 +1,14 @@
 {
+    "song": "song.mp3",
+    
     "width": "default",
     "height": "default",
 
     "font": "Kablammo-Regular-VariableFont_MORF.ttf",
     
-    "song_speed": 6,
+    "song_speed": 10.5,
     "tile_height": 250,
-    "speed_increase_rate": 0.2,
+    "speed_increase_rate": 0,
     "lines": 4,
     "repeat": false,
 
@@ -17,7 +19,7 @@
     "show_score": false,
     "show_fps": true,
 
-    "fps": 240,
+    "fps": 330,
 
     "spawn_rates": {
         "single_note_spawn_rate": 5,

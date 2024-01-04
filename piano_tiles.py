@@ -101,6 +101,8 @@ class App(SongInfo):
         
         if self._SETTINGS["show_fps"]:
             self.show_fps2 = self.show_fps
+        
+        pygame.mixer.music.load(self._SETTINGS["song"])
     
     
     def generate_new_tile(self) -> Tile:
@@ -216,7 +218,9 @@ class App(SongInfo):
         if mouse_x > rect.left and mouse_x < rect.right and mouse_y > rect.top and mouse_y < rect.bottom:
             return True
     
+    
     def game_over(self):
+        pygame.mixer.music.stop()
         self.score = 0
         self.update_score()
         
@@ -278,6 +282,8 @@ class App(SongInfo):
             
             pygame.display.flip()
             self.clock.tick(self._REFRESH_RATE)
+        
+        pygame.mixer.music.play()
     
     
     def rss(self):
@@ -346,6 +352,7 @@ class App(SongInfo):
         self.current_note_key = self.tiles[0].related_key
         
         pygame.event.set_blocked(MOUSEMOTION)
+        pygame.mixer.music.play()
         while self.running:
             for event in pygame.event.get():
                 if event.type == KEYDOWN:
