@@ -428,7 +428,7 @@ class App(SongInfo):
             
             self.timer += self.dt
             self.d_song_speed += self.dt * self._SETTINGS["speed_increase_rate"]
-            self.tile_spawn_rate = (1/self.d_song_speed)
+            self.tile_spawn_rate = 1/self.d_song_speed
             if self.timer >= self.tile_spawn_rate:
                 self.generate_new_tile()
                 if len(self.tiles):
