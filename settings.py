@@ -5,6 +5,8 @@ _SETTINGS = load(open("settings.json"))
 pygame.display.init()
 
 LINES = _SETTINGS["lines"]
+if LINES > 9:
+    LINES = 9
 
 if _SETTINGS["height"] == "default":
     HEIGHT = pygame.display.Info().current_h

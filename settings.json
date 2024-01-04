@@ -10,20 +10,25 @@
     "lines": 4,
     "repeat": false,
 
-    "fixed_width": true,
+    "fixed_width": false,
     "game_over_fade_in_time": 1,
     "show_speed": true,
     "speed_decimals": 2,
     "show_score": false,
     "show_fps": true,
 
-    "fps": 360,
+    "fps": 240,
 
     "spawn_rates": {
         "single_note_spawn_rate": 5,
         "double_note_spawn_rate": 0,
         "triple_note_spawn_rate": 0,
         "quad_note_spawn_rate": 0,
+        "quin_note_spawn_rate": 0,
+        "sex_note_spawn_rate": 0,
+        "sep_note_spawn_rate": 0,
+        "non_note_spawn_rate":0,
+        "dec_note_spawn_rate": 0,
         "empty_tile_spawn_rate": 0
     },
 

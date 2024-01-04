@@ -87,7 +87,7 @@ class App(SongInfo):
         
         self.spawn_rates = []
         for s in range(LINES):
-            for nt in range(self._SETTINGS["spawn_rates"][list(self._SETTINGS["spawn_rates"].keys())[s]]):
+            for _ in range(self._SETTINGS["spawn_rates"][list(self._SETTINGS["spawn_rates"].keys())[s]]):
                 self.spawn_rates.append(list(self._SETTINGS["spawn_rates"].keys())[s])
         
         if self._SETTINGS["show_score"] and self._SETTINGS["show_speed"]:
@@ -104,6 +104,12 @@ class App(SongInfo):
     
     
     def generate_new_tile(self) -> Tile:
+        l = choice(range(0, LINES))
+        x = (WIDTH//LINES) * l
+        t = Tile(x, self.song_speed)
+        t.related_key = self.keys[l]
+        remove_items = [l, ]
+        
         note_type = choice(self.spawn_rates)
         if note_type == "single_note_spawn_rate" and LINES >= 1:
             l = choice(range(0, LINES))
@@ -126,10 +132,6 @@ class App(SongInfo):
             self.tiles.append(t)
         
         elif note_type == "double_note_spawn_rate" and LINES >= 2:
-            l = choice(range(0, LINES))
-            x = (WIDTH//LINES) * l
-            t = Tile(x, self.song_speed)
-            t.related_key = self.keys[l]
             self.tiles.append(t)
             
             l2 = list(range(0, LINES))
@@ -141,14 +143,9 @@ class App(SongInfo):
             self.tiles.append(t)
         
         elif note_type == "triple_note_spawn_rate" and LINES >= 3:
-            l = choice(range(0, LINES))
-            x = (WIDTH//LINES) * l
-            t = Tile(x, self.song_speed)
-            t.related_key = self.keys[l]
             self.tiles.append(t)
-            remove_items = [l, ]
             
-            for tile in range(2):
+            for _ in range(2):
                 l2 = list(range(0, LINES))
                 for item in remove_items:
                     l2.remove(item)
@@ -160,14 +157,8 @@ class App(SongInfo):
                 remove_items.append(l)
         
         elif note_type == "quad_note_spawn_rate" and LINES >= 4:
-            l = choice(range(0, LINES))
-            x = (WIDTH//LINES) * l
-            t = Tile(x, self.song_speed)
-            t.related_key = self.keys[l]
             self.tiles.append(t)
-            remove_items = [l, ]
-            
-            for tile in range(3):
+            for _ in range(3):
                 l2 = list(range(0, LINES))
                 for item in remove_items:
                     l2.remove(item)
