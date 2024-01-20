@@ -26,15 +26,81 @@ class Tile(SongInfo):
         self.speed = speed * H_RATIO
 
 
-class App(SongInfo):
+class BG(SongInfo):
+    def __init__(self) -> None:
+        super().__init__()
+        self.surface = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption("piano tiles by erfan :D")
+        pygame.display.set_icon(pygame.image.load("assets/icon.png"))
+        
+        self.colors = self._SETTINGS["colors"]["bg_colors"]
+        self.colors_len = len(self.colors)
+        self.main_r = self.colors[0][0]
+        self.main_g = self.colors[0][1]
+        self.main_b = self.colors[0][2]
+        self.r = self.colors[0][0]
+        self.g = self.colors[0][1]
+        self.b = self.colors[0][2]
+        self.enum = 1
+        self.rainbow_color_speed = self._SETTINGS["colors"]["rainbow_color_speed"]
+        self.rainbow_layers = self._SETTINGS["rainbow_bg_layers"]
+        if self.rainbow_layers > self.colors_len:
+            self.rainbow_layers = self.colors_len
+        
+        self.rainbow_layers_1 = self.rainbow_layers - 1
+    
+    
+    def fill(self, surface: pygame.Surface, color_group="bg_colors"):
+        h = surface.get_height()
+        w = surface.get_width()
+        ratio = self.rainbow_layers/h
+        
+        self.bg_colors = self._SETTINGS["colors"][color_group]
+        en = int(self.enum)
+        self.ri = (self.bg_colors[en][0]-self.r)*self.dt
+        self.gi = (self.bg_colors[en][1]-self.g)*self.dt
+        self.bi = (self.bg_colors[en][2]-self.b)*self.dt
+        for i in range(self.rainbow_layers_1):
+            r, g, b = self.bg_colors[i][0], self.bg_colors[i][1], self.bg_colors[i][2]
+            r_interval = (self.bg_colors[i+1][0] - r) * ratio
+            g_interval = (self.bg_colors[i+1][1] - g) * ratio
+            b_interval = (self.bg_colors[i+1][2] - b) * ratio
+            
+            for height in range(h//self.rainbow_layers_1 * i, h//self.rainbow_layers_1 * (i+1)):
+                r += r_interval + self.ri
+                g += g_interval + self.gi
+                b += b_interval + self.bi
+                
+                if r > 255:
+                    r = 255
+                elif r < 0:
+                    r = 0
+                
+                if g > 255:
+                    g = 255
+                elif g < 0:
+                    g = 0
+                
+                if b > 255:
+                    b = 255
+                elif b < 0:
+                    b = 0
+                
+                pygame.draw.line(surface, (int(r), int(g), int(b)), (0, height), (w, height))
+            
+        
+            self.enum += self.dt * self.rainbow_color_speed
+            self.enum %= self.colors_len
+        
+        self.r, self.g, self.b, = r, g, b
+
+
+class App(BG):
     def __init__(self) -> None:
         super().__init__()
         pygame.init()
 
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("piano tiles by erfan :D")
-        
-        pygame.display.set_icon(pygame.image.load("assets/icon.png"))
+        self.screen = BG()
         
         self.running = True
         self.clock = pygame.time.Clock()
@@ -103,6 +169,11 @@ class App(SongInfo):
             self.show_fps2 = self.show_fps
         
         pygame.mixer.music.load(self._SETTINGS["song"])
+        
+        if self._SETTINGS["rainbow_bg"]:
+            self.fill_bg = self.fill
+        else:
+            self.fill_bg = self.fill_surface
     
     
     def generate_new_tile(self) -> Tile:
@@ -211,7 +282,7 @@ class App(SongInfo):
     def show_fps(self):
         fps_text: pygame.Surface = self.reset_font.render(f"{(self.clock.get_fps()):.2f}", 1, self._SETTINGS["colors"]["score_color"])
         fps_text_rect = fps_text.get_rect()
-        self.screen.blit(fps_text, (10*W_RATIO, 10*H_RATIO), fps_text_rect)
+        self.screen.surface.blit(fps_text, (10*W_RATIO, 10*H_RATIO), fps_text_rect)
     
     
     def mouse_col_check(self, mouse_x, mouse_y, rect):
@@ -230,8 +301,6 @@ class App(SongInfo):
         
         
         self.tiles = []
-        self.fill_bg(self.screen)
-        
         
         go_text_color: tuple[int, int, int] = self._SETTINGS["colors"]["game_over_start_color"]
         r, g, b = go_text_color[0], go_text_color[1], go_text_color[2]
@@ -248,8 +317,8 @@ class App(SongInfo):
         timer = 0
         while True:
             self.check_for_quit()
-            
-            self.screen.blit(go_text, (WIDTH//2 - go_text_rect.width//2, 100), go_text_rect)
+            self.fill_bg(self.screen.surface)
+            self.screen.surface.blit(go_text, (WIDTH//2 - go_text_rect.width//2, 100), go_text_rect)
             
             r += self._SETTINGS["game_over_fade_in_time"] * r_interval * self.dt
             g += self._SETTINGS["game_over_fade_in_time"] * g_interval * self.dt
@@ -276,7 +345,7 @@ class App(SongInfo):
             timer += self.dt
             
             if timer >= 1:
-                self.screen.blit(reset, (WIDTH//2 - reset_rect.w//2, HEIGHT//2 - reset_rect.h//2), reset_rect)
+                self.screen.surface.blit(reset, (WIDTH//2 - reset_rect.w//2, HEIGHT//2 - reset_rect.h//2), reset_rect)
                 if get_hotkey_name():
                     break
             
@@ -289,26 +358,25 @@ class App(SongInfo):
     def rss(self):
         speed_text: pygame.Surface = self.go_font.render(f"{(self.d_song_speed):.2f}", 1, self._SETTINGS["colors"]["score_color"])
         speed_text_rect = speed_text.get_rect()
-        self.screen.blit(speed_text, (WIDTH//2 - speed_text_rect.w//2, 110*H_RATIO), speed_text_rect)
+        self.screen.surface.blit(speed_text, (WIDTH//2 - speed_text_rect.w//2, 110*H_RATIO), speed_text_rect)
         self.r_scr()
     
     def r_spd(self):
         speed_text: pygame.Surface = self.go_font.render(f"{(self.d_song_speed):.2f}", 1, self._SETTINGS["colors"]["score_color"])
         speed_text_rect = speed_text.get_rect()
-        self.screen.blit(speed_text, (WIDTH//2 - speed_text_rect.w//2, 10*H_RATIO), speed_text_rect)
+        self.screen.surface.blit(speed_text, (WIDTH//2 - speed_text_rect.w//2, 10*H_RATIO), speed_text_rect)
     
     def r_scr(self):
-        self.screen.blit(self.score_text, (WIDTH//2 - self.score_text_rect.w//2, 10*H_RATIO), self.score_text_rect)
-
+        self.screen.surface.blit(self.score_text, (WIDTH//2 - self.score_text_rect.w//2, 10*H_RATIO), self.score_text_rect)
     
-    def fill_bg(self, surface: pygame.Surface, color_group="bg_colors"):
+    
+    def fill_surface(self, surface: pygame.Surface, color_group="bg_colors"):
         colors = self._SETTINGS["colors"][color_group]
         l_colors = len(self._SETTINGS["colors"][color_group])
         l_colors_1 = l_colors-1
         
         h = surface.get_height()
         w = surface.get_width()
-        m = h * l_colors_1
         for i in range(l_colors_1):
             r, g, b = colors[i][0], colors[i][1], colors[i][2]
             
@@ -416,10 +484,11 @@ class App(SongInfo):
                 elif event.type == QUIT:
                     self.quit()
             
-            
-            self.fill_bg(self.screen)
+            if not pygame.mixer.music.get_busy():
+                pygame.mixer.music.play()
+            self.fill_bg(self.screen.surface)
             for l in range(1, LINES):
-                pygame.draw.line(self.screen, self._SETTINGS["colors"]["line_color"], (WIDTH//LINES*l, 0), (WIDTH//LINES*l, HEIGHT), 1)
+                pygame.draw.line(self.screen.surface, self._SETTINGS["colors"]["line_color"], (WIDTH//LINES*l, 0), (WIDTH//LINES*l, HEIGHT), 1)
             
             if self.clock.get_fps() != 0:
                 self.dt = 1 / self.clock.get_fps() 
@@ -440,8 +509,8 @@ class App(SongInfo):
                     self.game_over()
                     break
                 
-                self.fill_bg(t.img, "tile_colors")
-                self.screen.blit(t.img, t.rect)
+                self.fill_surface(t.img, "tile_colors")
+                self.screen.surface.blit(t.img, t.rect)
                 t.rect.y += t.speed * self.dt
             
             
