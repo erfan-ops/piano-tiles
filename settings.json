@@ -14,9 +14,9 @@
 
     "fixed_width": false,
     "game_over_fade_in_time": 1,
-    "show_speed": true,
+    "show_speed": false,
     "speed_decimals": 2,
-    "show_score": false,
+    "show_score": true,
     "show_fps": true,
     "rainbow_bg": false,
     "rainbow_bg_layers": 16,
@@ -37,12 +37,12 @@
     },
 
     "colors": {
-        "bg_colors": [[255, 0, 0], [255, 0, 255], [0, 0, 255], [0, 255, 255], [0, 255, 0], [255, 255, 0]],
-        "tile_colors": [[255, 255, 255], [255, 255, 255]],
+        "bg_colors": [[0, 0, 0], [0, 0, 0]],
+        "tile_colors": [[0, 0, 0], [255, 0, 0]],
         "line_color": "#ffffff",
-        "score_color": "#ffffff",
-        "game_over_start_color": [255, 0, 0],
-        "game_over_end_color": [255, 255, 255],
+        "score_color": "#ff0000",
+        "game_over_start_color": [0, 0, 0],
+        "game_over_end_color": [255, 0, 0],
         "text_color": [0, 0, 0],
         "rainbow_color_speed": 1
     },

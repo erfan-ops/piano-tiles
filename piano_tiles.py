@@ -112,7 +112,7 @@ class App(BG):
         self.go_font = pygame.font.Font(f"fonts/{self._SETTINGS['font']}", int(80 * W_RATIO * H_RATIO))
         self.reset_font = pygame.font.Font(f"fonts/{self._SETTINGS['font']}", int(40 * W_RATIO * H_RATIO))
         
-        if self._SETTINGS["fps"] == "VSync":
+        if str(self._SETTINGS["fps"]).lower() == "vsync":
             self._REFRESH_RATE: int = EnumDisplaySettings(EnumDisplayDevices().DeviceName, -1).DisplayFrequency
         else:
             self._REFRESH_RATE = self._SETTINGS["fps"]
@@ -372,8 +372,7 @@ class App(BG):
     
     def fill_surface(self, surface: pygame.Surface, color_group="bg_colors"):
         colors = self._SETTINGS["colors"][color_group]
-        l_colors = len(self._SETTINGS["colors"][color_group])
-        l_colors_1 = l_colors-1
+        l_colors_1 = len(self._SETTINGS["colors"][color_group]) - 1
         
         h = surface.get_height()
         w = surface.get_width()
