@@ -6,9 +6,9 @@
 
     "font": "Kablammo-Regular-VariableFont_MORF.ttf",
     
-    "song_speed": 11,
+    "song_speed": 6,
     "tile_height": 250,
-    "speed_increase_rate": 0,
+    "speed_increase_rate": 0.1,
     "lines": 4,
     "repeat": false,
 
@@ -21,7 +21,7 @@
     "rainbow_bg": false,
     "rainbow_bg_layers": 16,
 
-    "fps": 240,
+    "fps": 360,
 
     "spawn_rates": {
         "single_note_spawn_rate": 5,
