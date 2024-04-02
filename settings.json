@@ -6,7 +6,7 @@
 
     "font": "Kablammo-Regular-VariableFont_MORF.ttf",
     
-    "song_speed": 6,
+    "song_speed": 9,
     "tile_height": 250,
     "speed_increase_rate": 0.1,
     "lines": 4,
@@ -18,8 +18,7 @@
     "speed_decimals": 2,
     "show_score": true,
     "show_fps": true,
-    "rainbow_bg": false,
-    "rainbow_bg_layers": 16,
+    "rainbow_bg": true,
 
     "fps": 360,
 
@@ -37,8 +36,8 @@
     },
 
     "colors": {
-        "bg_colors": [[0, 0, 0], [0, 0, 0]],
-        "tile_colors": [[0, 0, 0], [255, 0, 0]],
+        "bg_colors": [[255, 0, 0], [0, 0, 255]],
+        "tile_colors": [[0, 0, 0], [100, 0, 0], [255, 0, 0]],
         "line_color": "#ffffff",
         "score_color": "#ff0000",
         "game_over_start_color": [0, 0, 0],
